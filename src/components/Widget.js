@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 
-// import sdkSrc from "../lr-sdk";
 const sdkSrc = "https://content.onemarketnetwork.com/livereceipt/lr-sdk.min.js";
+// const sdkSrc = "https://content.dev.one.market/livereceipt/lr-sdk.min.js";
 
 const Container = styled.div`
   margin: 0 0 1rem;
@@ -28,17 +28,16 @@ class Widget extends Component {
     // The SDK keeps track of the user's intent to opt in. Check if this flag is
     // true first before confirming the user opt in, otherwise you might
     // accidentally optin in a user that didn't want to.
-    if (window.OM.optedIn) {
-      const prevSavedOptinRef = window.OM.fbOptions.dataRef;
-      console.log(
-        "[spa] User has intent to opt-in. Time to opt in the user: ",
-        prevSavedOptinRef
-      );
-
-      // The key method to call to finally opt the user in. It is vital
-      // `confirmUserOptIn` is called only after the SDK has finished intializing.
-      window.OM.confirmUserOptIn(prevSavedOptinRef);
-    }
+    // if (window.OM.optedIn) {
+    //   const prevSavedOptinRef = window.OM.fbOptions.dataRef;
+    //   console.log(
+    //     "[spa] User has intent to opt-in. Time to opt in the user: ",
+    //     prevSavedOptinRef
+    //   );
+    //   // The key method to call to finally opt the user in. It is vital
+    //   // `confirmUserOptIn` is called only after the SDK has finished intializing.
+    //   window.OM.confirmUserOptIn(prevSavedOptinRef);
+    // }
   };
 
   addScript = () => {
@@ -69,8 +68,11 @@ class Widget extends Component {
     window.OM.init({
       postCheckout: hasOptInRef,
       optInRef: optInRef,
+      userPref: {
+        data: []
+      }
       //   Only set the callback if we are postCheckout
-      afterInitCb: postCheckout ? this.onSdkReady.bind(this) : undefined
+      // afterInitCb: postCheckout ? this.onSdkReady.bind(this) : undefined
     });
   };
 
